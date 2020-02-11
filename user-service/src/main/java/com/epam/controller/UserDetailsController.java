@@ -28,7 +28,7 @@ public class UserDetailsController {
 	@Autowired
 	Response responsePojo;
 
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/register", consumes = "application/json")
 	public ResponseEntity<Response> registerUser(@RequestBody @Valid UserDto user)
 			throws UnableToModifyException, UpdationFailureException {
 		UserDto userDto;

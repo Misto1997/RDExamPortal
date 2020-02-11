@@ -36,7 +36,7 @@ public class UserTestDetailsController {
 	@Autowired
 	private UserTestService userTestService;
 
-	@PostMapping(value = "/submit")
+	@PostMapping(value = "/submit", consumes = "application/json")
 	public ResponseEntity<Response> setUserTestDetails(@RequestBody @Valid UserTestDetailsDto userTestDetails)
 			throws UnableToModifyException, UpdationFailureException {
 
@@ -55,7 +55,7 @@ public class UserTestDetailsController {
 		return new ResponseEntity<>(responsePojo, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/details/{userId}")
+	@GetMapping(value = "/details/{userId}", produces = "application/json")
 	public ResponseEntity<List<UserTestDataDto>> getUserTestDetails(@PathVariable int userId)
 			throws NoContentFoundException, SqlCustomerException {
 		List<UserTestDataDto> userTestDataDto = new ArrayList<>();
@@ -72,7 +72,7 @@ public class UserTestDetailsController {
 
 	}
 
-	@GetMapping(value = "/userDetails/{domainId}")
+	@GetMapping(value = "/userDetails/{domainId}", produces = "application/json")
 	public ResponseEntity<List<AllUsersDataDto>> getUsersfTestDetails(@PathVariable int domainId)
 			throws NoContentFoundException, SqlCustomerException {
 		List<AllUsersDataDto> allUsersTestDto = new ArrayList<>();

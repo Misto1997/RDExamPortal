@@ -28,7 +28,7 @@ public class TrainerDetailsController {
 	@Autowired
 	Response responsePojo;
 
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/register", consumes = "application/json")
 	public ResponseEntity<Response> registerTrainer(@RequestBody @Valid TrainerDto trainer)
 			throws UnableToModifyException, UpdationFailureException {
 		TrainerDto trainerDto;
