@@ -11,7 +11,7 @@ import com.epam.entity.QuestionBankEntity;
 @Repository
 public interface QuestionBankRepository extends JpaRepository<QuestionBankEntity, Integer> {
 
-	@Query(nativeQuery = true, value = "SELECT * FROM question_bank ORDER BY RAND() LIMIT 10")
+	@Query(nativeQuery = true, value = "SELECT * FROM question_bank where test_id=?1 ORDER BY RAND() LIMIT 10")
 	List<QuestionBankEntity> findBytestId(int testId);
 
 }

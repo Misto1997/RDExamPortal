@@ -5,24 +5,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import com.epam.model.UserData;
+import com.epam.entity.UserEntity;
+import com.epam.repository.UserDetailsRepository;
 
-@Service(value = "adminLogin")
-public class AdminLoginService implements UserDetailsService {
+@Service
+public class UserLoginService implements UserDetailsService {
 
 	@Autowired
-	RestTemplate restTemplate;
+	UserDetailsRepository userDetailsRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		UserData user = restTemplate.getForObject("http://admin-service/login/" + username, UserData.class);
+		int userId = Integer.parseInt(username);
+		UserEntity userDetails = userDetailsRepository.findById(userId).orElse(null);
 
-		if (user == null) {
-			throw new UsernameNotFoundException("Admin not found!!!");
+		if (userDetails == null) {
+			throw new UsernameNotFoundException("User not found!!!");
 		} else {
-			return new UserDetailsImpl(user);
+			return new UserDetailsImpl(userDetails);
 		}
 
 	}

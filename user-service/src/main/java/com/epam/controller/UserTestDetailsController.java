@@ -27,7 +27,7 @@ import com.epam.responsemodel.Response;
 import com.epam.service.UserTestService;
 
 @RestController
-@RequestMapping(value = "/userTest")
+@RequestMapping(value = "/traineeTest")
 public class UserTestDetailsController {
 
 	@Autowired
@@ -72,7 +72,7 @@ public class UserTestDetailsController {
 
 	}
 
-	@GetMapping(value = "/userDetails/{domainId}", produces = "application/json")
+	@GetMapping(value = "/traineeDetails/{domainId}", produces = "application/json")
 	public ResponseEntity<List<AllUsersDataDto>> getUsersfTestDetails(@PathVariable int domainId)
 			throws NoContentFoundException, SqlCustomerException {
 		List<AllUsersDataDto> allUsersTestDto = new ArrayList<>();

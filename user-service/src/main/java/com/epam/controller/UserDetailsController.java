@@ -16,14 +16,14 @@ import com.epam.exception.UnableToModifyException;
 import com.epam.exception.UpdationFailureException;
 import com.epam.model.UserDto;
 import com.epam.responsemodel.Response;
-import com.epam.service.UserDetailsService;
+import com.epam.service.UserDataService;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/trainee")
 public class UserDetailsController {
 
 	@Autowired
-	UserDetailsService userDetailsService;
+	UserDataService userDataService;
 
 	@Autowired
 	Response responsePojo;
@@ -33,7 +33,7 @@ public class UserDetailsController {
 			throws UnableToModifyException, UpdationFailureException {
 		UserDto userDto;
 		try {
-			userDto = userDetailsService.registerUser(user);
+			userDto = userDataService.registerUser(user);
 		} catch (SQLException sql) {
 			throw new UpdationFailureException("something went wrong");
 		}

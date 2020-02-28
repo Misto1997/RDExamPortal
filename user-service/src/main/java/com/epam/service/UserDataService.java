@@ -13,7 +13,7 @@ import com.epam.model.UserDto;
 import com.epam.repository.UserDetailsRepository;
 
 @Service
-public class UserDetailsService {
+public class UserDataService {
 
 	@Autowired
 	UserDetailsRepository userDetailsRepository;

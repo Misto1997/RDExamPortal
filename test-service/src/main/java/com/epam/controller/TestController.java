@@ -20,7 +20,7 @@ import com.epam.responsemodel.Response;
 import com.epam.service.TestService;
 
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/data")
 public class TestController {
 
 	@Autowired
