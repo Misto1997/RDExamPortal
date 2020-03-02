@@ -28,30 +28,20 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		System.out.println("chala");
 		String header = request.getHeader(jwtConfig.getHeader());
-		System.out.println(header);
 		if (header == null || !header.startsWith(jwtConfig.getPrefix())) {
 			chain.doFilter(request, response);
-			System.out.println("header ke andar chala");
 			return;
 		}
-		System.out.println("bahar");
 		String token = header.replace(jwtConfig.getPrefix(), "");
-		System.out.println(token);
 		try {
-			System.out.println("andar chala");
 			Claims claims = Jwts.parser().setSigningKey(jwtConfig.getSecret()).parseClaimsJws(token).getBody();
-			System.out.println(claims);
 			String username = claims.getSubject();
 			if (username != null) {
 				@SuppressWarnings("unchecked")
-
 				List<String> authorities = (List<String>) claims.get("authorities");
-				System.out.println(authorities);
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null,
 						authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-				System.out.println("aya");
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		} catch (Exception e) {

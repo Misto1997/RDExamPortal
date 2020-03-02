@@ -8,34 +8,34 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.epam.model.UserData;
+import com.epam.entity.TrainerEntity;
 
 @Service
-public class UserDetailsImpl implements UserDetails {
+public class AdminDetailsImpl implements UserDetails {
 
 	private static final long serialVersionUID = -2960957753550825729L;
-	private transient UserData user;
+	private transient TrainerEntity admin;
 
-	public UserDetailsImpl(UserData user) {
-		this.user = user;
+	public AdminDetailsImpl(TrainerEntity admin) {
+		this.admin = admin;
 	}
 
-	public UserDetailsImpl() {
+	public AdminDetailsImpl() {
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority("user"));
+		return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
 	}
 
 	@Override
 	public String getPassword() {
-		return user.getPassword();
+		return admin.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return user.getUserName();
+		return String.valueOf(admin.getTrainerId());
 	}
 
 	@Override

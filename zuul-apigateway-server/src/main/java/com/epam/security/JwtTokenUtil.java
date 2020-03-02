@@ -3,27 +3,38 @@ package com.epam.security;
 import org.springframework.beans.factory.annotation.Value;
 
 public class JwtTokenUtil {
-	@Value("${security.jwt.uri:/user/auth}")
-	private String uri;
+	@Value("${user.auth.uri}")
+	private String userUri;
 
-	@Value("${security.jwt.header:Authorization}")
+	@Value("${admin.auth.uri}")
+	private String adminUri;
+
+	@Value("${security.jwt.header}")
 	private String header;
 
-	@Value("${security.jwt.prefix:Bearer }")
+	@Value("${security.jwt.prefix}")
 	private String prefix;
 
-	@Value("${security.jwt.expiration:#{24*60*60}}")
+	@Value("${security.jwt.expiration}")
 	private int expiration;
 
-	@Value("${security.jwt.secret:JwtSecretKey}")
+	@Value("${security.jwt.secret}")
 	private String secret;
 
-	public String getUri() {
-		return uri;
+	public String getUserUri() {
+		return userUri;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setUserUri(String userUri) {
+		this.userUri = userUri;
+	}
+
+	public String getAdminUri() {
+		return adminUri;
+	}
+
+	public void setAdminUri(String adminUri) {
+		this.adminUri = adminUri;
 	}
 
 	public String getHeader() {

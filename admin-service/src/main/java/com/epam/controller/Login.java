@@ -1,7 +1,6 @@
 package com.epam.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,10 +16,8 @@ import com.epam.model.JwtRequest;
 import com.epam.model.JwtResponse;
 import com.epam.security.JwtTokenUtil;
 import com.epam.service.AdminLoginService;
-import com.epam.service.UserLoginService;
 
 @RestController
-
 public class Login {
 
 	@Autowired
@@ -30,20 +27,12 @@ public class Login {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	@Qualifier("userLogin")
 	private UserDetailsService userDetailsService;
 
 	@Autowired
-	@Qualifier("adminLogin")
-	private UserDetailsService adminDetailsService;
+	AdminLoginService userLoginService;
 
-	@Autowired
-	UserLoginService userLoginService;
-
-	@Autowired
-	AdminLoginService adminLoginService;
-
-	@PostMapping(value = "/user")
+	@PostMapping(value = "/auth")
 	public ResponseEntity<?> createAuthenticationTokenForUser(@RequestBody JwtRequest authenticationRequest)
 			throws Exception {
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -55,23 +44,11 @@ public class Login {
 		return ResponseEntity.ok(new JwtResponse("Bearer " + token));
 	}
 
-	@PostMapping(value = "/admin")
-	public ResponseEntity<?> createAuthenticationTokenForAdmin(@RequestBody JwtRequest authenticationRequest)
-			throws Exception {
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
-		final UserDetails userDetails = adminDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-
-		final String token = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new JwtResponse("Bearer " + token));
-	}
-
 	private void authenticate(String username, String password) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
-			throw new DisabledException("USER_DISABLED", e);
+			throw new DisabledException("ADMIN_DISABLED", e);
 		} catch (BadCredentialsException e) {
 			throw new BadCredentialsException("INVALID_CREDENTIALS", e);
 		}

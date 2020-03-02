@@ -18,8 +18,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
-				.anyRequest().authenticated().and().exceptionHandling()
+		http.csrf().disable().authorizeRequests()
+				.antMatchers(HttpMethod.POST, jwtConfig.getUserUri(), jwtConfig.getAdminUri(), "/user/trainee/register",
+						"/admin/trainer/register")
+				.permitAll()
+				.antMatchers("/user/traineeTest/submit", "/user/traineeTest/details/**",
+						"/test/questionBank/getQuestions/**")
+				.hasAuthority("USER")
+				.antMatchers("/user/traineeTest/traineeDetails/**", "/test/questionBank/addQuestions", "/test/data/**")
+				.hasAuthority("ADMIN").and().exceptionHandling()
 				.authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED)).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterAfter(
 						new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class);
