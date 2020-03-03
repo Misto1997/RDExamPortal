@@ -13,5 +13,4 @@ public class ZuulApigatewayServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ZuulApigatewayServerApplication.class, args);
 	}
-
 }
