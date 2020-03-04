@@ -17,6 +17,10 @@ import com.epam.model.JwtResponse;
 import com.epam.security.JwtTokenUtil;
 import com.epam.service.AdminLoginService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 public class Login {
 
@@ -33,6 +37,11 @@ public class Login {
 	AdminLoginService userLoginService;
 
 	@PostMapping(value = "/auth")
+	@ApiOperation(value = "auth for providing JWT Token")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully authorized"),
+			@ApiResponse(code = 401, message = "You are not authorized"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
 	public ResponseEntity<?> createAuthenticationTokenForUser(@RequestBody JwtRequest authenticationRequest)
 			throws Exception {
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());

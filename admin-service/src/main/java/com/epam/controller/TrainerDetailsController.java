@@ -18,6 +18,10 @@ import com.epam.model.TrainerDto;
 import com.epam.responsemodel.Response;
 import com.epam.service.RegisterService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
+
 @RestController
 @RequestMapping(value = "/trainer")
 public class TrainerDetailsController {
@@ -29,6 +33,11 @@ public class TrainerDetailsController {
 	Response responsePojo;
 
 	@PostMapping(value = "/register", consumes = "application/json")
+	@ApiOperation(value = "endpoint for registering trainer")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Registration successfull"),
+			@ApiResponse(code = 406, message = "something went wrong"),
+			@ApiResponse(code = 409, message = "Trainer Already registered!"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
 	public ResponseEntity<Response> registerTrainer(@RequestBody @Valid TrainerDto trainer)
 			throws UnableToModifyException, UpdationFailureException {
 		TrainerDto trainerDto;
