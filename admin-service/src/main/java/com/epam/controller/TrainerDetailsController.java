@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import io.swagger.annotations.ApiResponse;
 
 @RestController
 @RequestMapping(value = "/trainer")
+@RefreshScope
 public class TrainerDetailsController {
 
 	@Autowired
@@ -38,7 +40,7 @@ public class TrainerDetailsController {
 
 	@PostMapping(value = "/register", consumes = "application/json")
 	@ApiOperation(value = "endpoint for registering trainer")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Registration successfull"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Registration successful"),
 			@ApiResponse(code = 406, message = "something went wrong"),
 			@ApiResponse(code = 409, message = "Trainer Already registered!"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
