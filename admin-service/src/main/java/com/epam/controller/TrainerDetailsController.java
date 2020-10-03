@@ -26,7 +26,6 @@ import io.swagger.annotations.ApiResponse;
 
 @RestController
 @RequestMapping(value = "/trainer")
-@RefreshScope
 public class TrainerDetailsController {
 
 	@Autowired
